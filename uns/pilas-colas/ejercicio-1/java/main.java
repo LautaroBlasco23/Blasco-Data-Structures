@@ -13,7 +13,20 @@ class main {
             return this.nombre;
         }
     }
+    
+    public static void Invertir(Persona[] arreglo) {
+        Stack<Persona> miPila = new Stack<>();
 
+        // Ingresamos valores a la pila.
+        for(int i = 0; i < 5; i++) {
+            miPila.push(arreglo[i]);
+        }
+
+        // Devolvemos valores al arreglo.
+        for(int i = 0; i < 5; i++) {
+           arreglo[i] = miPila.pop();
+        }
+    }
 
     public static void main(String[] args) {
         // Generamos el arreglo de personas.
@@ -39,19 +52,5 @@ class main {
             System.out.println(miArregloDePersonas[i].obtenerNombre());
         }
 
-    }
-
-    public static void Invertir(Persona[] arreglo) {
-        Stack<Persona> miPila = new Stack<>();
-
-        // Ingresamos valores a la pila.
-        for(int i = 0; i < 5; i++) {
-            miPila.push(arreglo[i]);
-        }
-
-        // Devolvemos valores al arreglo.
-        for(int i = 0; i < 5; i++) {
-           arreglo[i] = miPila.pop();
-        }
     }
 }
