@@ -1,2 +1,7 @@
 *.exe
 *.pdb
+
+
+uns/Practico-java/App/.gradle
+uns/Practico-java/App/build
+

@@ -1,4 +1,3 @@
-// Genero la estrucura Queue para el ejercicio.
 #[derive(Debug)]
 struct Queue<T> {
     elementos: Vec<T>,
@@ -6,7 +5,6 @@ struct Queue<T> {
     max: usize,
 }
 
-// Implementación de los métodos que voy a usar en el ejercicio.
 impl<T> Queue<T> {
     pub fn new(max: usize) -> Queue<T> {
         Queue {
@@ -41,7 +39,6 @@ impl<T> Queue<T> {
     }
 }
 
-// Funcion para el ejercicio (dejar unicamente los numeros impares de la cola).
 fn solo_impares(cola: &mut Queue<i32>) {
     let mut nueva_cola: Queue<i32> = Queue::new(cola.length());
     
@@ -58,15 +55,12 @@ fn solo_impares(cola: &mut Queue<i32>) {
 }
 
 fn main() {
-    // Creo la cola con un máximo de 10 numeros enteros.
     let mut cola: Queue<i32> = Queue::new(10 as usize);
 
-    // Agrego 10 numeros a la cola.
-    for i in 1..=10 {
+    for i in 1..=11 {
         cola.add(i);
     }
 
-    // Testeo
     println!("{:?}", cola);
     solo_impares(&mut cola);
     println!("{:?}", cola);
