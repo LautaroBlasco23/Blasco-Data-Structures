@@ -1,7 +1,11 @@
 *.exe
 *.pdb
 
-
+# Practicos de la UNS:
 uns/Practico-java/App/.gradle
 uns/Practico-java/App/build
+uns/Practico-Rust/practico3/target
+
+
+
 

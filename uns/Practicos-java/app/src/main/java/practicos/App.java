@@ -11,9 +11,9 @@ public class App {
 
         ColaConPila c = new ColaConPila();
 
-        c.enqueue("Hola que tal mi amor");
-        c.enqueue("que calor pues");
         c.enqueue("Hola");
+        c.enqueue("que");
+        c.enqueue("tal");
         System.out.println(c.dequeue());
         System.out.println(c.dequeue());
         System.out.println(c.front());
