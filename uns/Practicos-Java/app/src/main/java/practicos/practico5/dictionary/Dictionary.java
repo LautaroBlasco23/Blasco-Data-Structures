@@ -1,21 +1,18 @@
 package practicos.practico5.dictionary;
 
-import practicos.practico4.TDALista;
+import practicos.practico4.Lista;
 import practicos.practico4.DNodo.Dnodo;
 import practicos.practico4.exceptions.InvalidPositionException;
 import practicos.practico4.interfaces.IteradorDeListaDE;
-import practicos.practico5.dictionary.IterableDictionary;
 import practicos.practico5.interfaces.TDADictionary;
-import practicos.practico5.interfaces.TDAEntry;
 import practicos.practico5.exceptions.*;
 import practicos.practico5.Entrada;
-import java.util.*;
 
 public class Dictionary<K,V> implements TDADictionary<K, V> {
-  protected TDALista<TDAEntry<K,V>> misEntradas;
+  protected Lista<Entrada<K,V>> misEntradas;
 
   public Dictionary() {
-    this.misEntradas = new TDALista<TDAEntry<K,V>>(null);
+    this.misEntradas = new Lista<Entrada<K,V>>();
   }
   
 	public int size() {
@@ -26,32 +23,56 @@ public class Dictionary<K,V> implements TDADictionary<K, V> {
     return this.misEntradas.size() == 0;
   }
 	
-	public TDAEntry<K,V> find(K key) throws InvalidKeyException {
-    IteradorDeListaDE<TDAEntry<K,V>> iterador = new IteradorDeListaDE<TDAEntry<K,V>>(this.misEntradas);
+	public Entrada<K,V> find(K key) throws InvalidKeyException {
+    if (key == null) {
+      throw new InvalidKeyException();
+    }
+
+    Entrada<K,V> elemento = null;
+
+    IteradorDeListaDE<Entrada<K,V>> iterador = new IteradorDeListaDE<Entrada<K,V>>(this.misEntradas);
 
     while (iterador.hasNext()) {
-      TDAEntry<K,V> elemento = iterador.next();
+      elemento = iterador.next();
       if (elemento.getKey() == key) {
         return elemento;
       }
     }
 
-    throw new InvalidKeyException();
+    return elemento;
   }
 	
-	public Iterable<TDAEntry<K,V>> findAll(K key) throws InvalidKeyException {
-    IterableDictionary<TDAEntry<K,V>> iterador = new IterableDictionary<TDAEntry<K,V>>(this.misEntradas, this.misEntradas.size());
-    return iterador;
+	public Iterable<Entrada<K,V>> findAll(K key) throws InvalidKeyException {
+    if (key == null) {
+      throw new InvalidKeyException();
+    }
+
+    Lista<Entrada<K,V>> coincidencias = new Lista<Entrada<K,V>>();
+
+    for (Entrada<K,V> entrada: this.misEntradas) {
+      if (entrada.getKey() == key) {
+        coincidencias.addLast(entrada);
+      }
+    }
+    return coincidencias;
   }
 	
-	public TDAEntry<K,V> insert(K key, V value) throws InvalidKeyException {
+	public Entrada<K,V> insert(K key, V value) throws InvalidKeyException {
+    if (key == null) {
+      throw new InvalidKeyException();
+    }
+
     Entrada<K,V> nuevaEntrada = new Entrada<>(key, value);
-    this.misEntradas.addLast(nuevaEntrada);
+    this.misEntradas.addFirst(nuevaEntrada);
     return nuevaEntrada;
   }
 	
-	public TDAEntry<K,V> remove(TDAEntry<K,V> e) throws InvalidEntryException {
-    Dnodo<TDAEntry<K,V>> position = new Dnodo(e);
+	public Entrada<K,V> remove(Entrada<K,V> e) throws InvalidEntryException {
+    if (e == null) {
+      throw new InvalidEntryException();
+    }
+
+    Dnodo<Entrada<K,V>> position = new Dnodo<Entrada<K,V>>(e);
     try {
       this.misEntradas.remove(position);
       return e;
@@ -60,8 +81,7 @@ public class Dictionary<K,V> implements TDADictionary<K, V> {
     }
   }
 	
-	public Iterable<TDAEntry<K,V>> entries() {
-    return new IterableDictionary(this.misEntradas, this.misEntradas.size());
+	public Iterable<Entrada<K,V>> entries() {
+    return this.misEntradas;
   }
-
 }

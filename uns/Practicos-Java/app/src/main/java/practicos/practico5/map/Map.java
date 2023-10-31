@@ -1,41 +1,38 @@
-package practicos.practico5;
+package practicos.practico5.map;
 
+import java.util.*;
 import practicos.practico5.interfaces.TDAMap; 
-import practicos.practico5.interfaces.TDAEntry;
 import practicos.practico5.Entrada;
 import practicos.practico5.exceptions.InvalidKeyException;
-import java.util.*;
-import practicos.practico5.map.IterableMapeo;
+import practicos.practico4.Lista;
+import practicos.practico4.DNodo.*;
+import practicos.practico4.exceptions.InvalidPositionException;
 
 public class Map<K, V> implements TDAMap<K, V> {
-  // size equivale a la cant de elementos que tengo.
-  private int size;
-  private Entrada<K, V>[] misEntradas;
+  private Lista<Entrada<K, V>> misEntradas;
 
-  public Map(int max) {
-    this.misEntradas = new Entrada[max];
+  public Map() {
+    this.misEntradas = new Lista<Entrada<K, V>>();
   }
 
   public int size() {
-    return this.size;
+    return this.misEntradas.size();
   }
 
   public boolean isEmpty() {
-    return this.size == 0;
+    return this.misEntradas.size() == 0;
   }
 
   public V get(K key) throws InvalidKeyException {
     boolean encontre = false;
     V resultado = null; 
-    for (int i = 0; i < this.size && !encontre; i++) {
-      if (this.misEntradas[i] != null) {
-        if (this.misEntradas[i].getKey() == key) {
-          resultado = this.misEntradas[i].getValue();
-          encontre = true;
-        }
+    Iterator<Entrada<K,V>> iterator = this.misEntradas.iterator();
+    while (!encontre && iterator.hasNext()) {
+      Entrada<K,V> entrada = iterator.next();
+      if (entrada.getKey() == key) {
+        resultado = entrada.getValue();
       }
     }
-
     if (resultado != null) {
       return resultado;
     }
@@ -43,67 +40,67 @@ public class Map<K, V> implements TDAMap<K, V> {
   }
 
   public V put(K key, V value) throws InvalidKeyException {
+    if (key == null) {
+      throw new InvalidKeyException();
+    }
     boolean encontre = false;
-    V resultado = null; 
-    for (int i = 0; i < this.size && !encontre; i++) {
-      if (this.misEntradas[i] != null) {
-        if (this.misEntradas[i].getKey() == key) {
-          resultado = this.misEntradas[i].getValue();
-          // establecemos el nuevo valor.
-          this.misEntradas[i].setValue(value);
-          encontre = true;
-        }
+    V oldValue = null;
+    
+    for (Entrada<K,V> entrada: this.misEntradas) {
+      if (entrada.getKey() == key) {
+        encontre = true;
+        oldValue = entrada.getValue();
+        entrada.setValue(value);
+        break;
       }
     }
 
-    if (resultado != null) {
-      return resultado;
+    if (!encontre) {
+      Entrada<K,V> nuevaEntrada = new Entrada<K,V>(key, value);
+      this.misEntradas.addFirst(nuevaEntrada);
+      return value;
     }
-    throw new InvalidKeyException();
+
+    return oldValue;
   }
 
   public V remove(K key) throws InvalidKeyException {
-  boolean encontre = false;
-    V resultado = null; 
-    for (int i = 0; i < this.size && !encontre; i++) {
-      if (this.misEntradas[i] != null) {
-        if (this.misEntradas[i].getKey() == key) {
-          resultado = this.misEntradas[i].getValue();
-          // establecemos el nuevo valor.
-          this.misEntradas[i] = this.misEntradas[this.size-1];
-          this.misEntradas[this.size-1].setValue(null);
-          encontre = true;
+    for (Entrada<K,V> entrada: this.misEntradas) {
+      if (entrada.getKey() == key) {
+        Dnodo<Entrada<K,V>> position = new Dnodo<Entrada<K,V>>(entrada);
+        try {
+          this.misEntradas.remove(position);
+        } catch (InvalidPositionException exception) {
+          throw new InvalidKeyException();
         }
+        return entrada.getValue();
       }
-    }
-
-    if (resultado != null) {
-      return resultado;
     }
     throw new InvalidKeyException();
   }
 
   public Iterable<K> keys() {
-    K[] listaKeys = (K[]) new Object[this.size];
-    for (int i = 0; i < this.size(); i++) {
-      listaKeys[i] = this.misEntradas[i].getKey();
+    Lista<K> nuevaLista = new Lista<K>();
+    for (Entrada<K,V> entrada: this.misEntradas) {
+      nuevaLista.addFirst(entrada.getKey());
     }
-    return new IterableMapeo(listaKeys, this.size);
+    return nuevaLista;
   }
 
   public Iterable<V> values() {
-    V[] listaValues = (V[]) new Object[this.size];
-    for (int i = 0; i < this.size(); i++) {
-      listaValues[i] = this.misEntradas[i].getValue();
+    Lista<V> nuevaLista = new Lista<V>();
+    for (Entrada<K,V> entrada: this.misEntradas) {
+      nuevaLista.addFirst(entrada.getValue());
     }
-    return new IterableMapeo(listaValues, this.size);
+    return nuevaLista;
   }
 
-  public Iterable<TDAEntry<K,V>> entries() {
-    TDAEntry<K,V>[] listaEntrys = (TDAEntry<K,V>[]) new Object[this.size];
-    for (int i = 0; i < this.size(); i++) {
-      listaEntrys[i] = this.misEntradas[i];
+  public Iterable<Entrada<K,V>> entries() {
+    Iterator<Entrada<K,V>> iterator = this.misEntradas.iterator();
+    Lista<Entrada<K,V>> nuevaLista = new Lista<Entrada<K,V>>();
+    while (iterator.hasNext()) {
+      nuevaLista.addFirst(iterator.next());
     }
-    return new IterableMapeo(listaEntrys, this.size);
+    return nuevaLista;
   }
 }

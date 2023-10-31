@@ -36,4 +36,8 @@ public class Dnodo<E> implements Position<E> {
     public Dnodo<E> anterior() {
         return this.anterior;
     }
+
+    public boolean equals(Dnodo<E> nodo) {
+      return nodo.element() == this.element();
+    }
 }

@@ -2,13 +2,13 @@ package practicos.practico4.interfaces;
 
 import java.util.Iterator;
 
-import practicos.practico4.TDALista;
+import practicos.practico4.Lista;
 import practicos.practico4.DNodo.Dnodo;
 
 public class IteradorDeListaDE<E> implements Iterator<E> {
     private Dnodo<E> currentNode;
     
-    public IteradorDeListaDE(TDALista<E> lista) {
+    public IteradorDeListaDE(Lista<E> lista) {
         if (lista.isEmpty()) {
             this.currentNode = null;
         } else {

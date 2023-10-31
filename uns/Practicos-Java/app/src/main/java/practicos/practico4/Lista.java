@@ -1,15 +1,12 @@
 package practicos.practico4;
 
-import java.io.LineNumberInputStream;
 import java.util.Iterator;
-import java.util.List;
 
 import practicos.practico4.DNodo.Dnodo;
 import practicos.practico4.exceptions.BoundaryViolationException;
 import practicos.practico4.exceptions.EmptyListException;
 import practicos.practico4.exceptions.InvalidPositionException;
 import practicos.practico4.exceptions.ListaNoValida;
-import practicos.practico4.interfaces.IterableDeListaDE;
 import practicos.practico4.interfaces.IteradorDeListaDE;
 import practicos.practico4.interfaces.Position;
 import practicos.practico4.interfaces.PositionList;
@@ -17,13 +14,13 @@ import practicos.practico4.interfaces.PositionList;
 // -------------------------------------------------------------------------------------
 // Ejercicio 1, implementar TDA lista. (Ejercicio 2 al final de la implementación)
 // -------------------------------------------------------------------------------------
-public class TDALista<E> implements PositionList<E> {
+public class Lista<E> implements PositionList<E> {
     private Dnodo<E> head;
     private int size;
 
-    public TDALista(E primerElemento) {
-        this.head = new Dnodo<E>(primerElemento);
-        this.size = 1;
+    public Lista() {
+        this.head = null;
+        this.size = 0;
     } 
 
     @Override
@@ -81,42 +78,51 @@ public class TDALista<E> implements PositionList<E> {
 
     @Override
     public void addFirst(E element) {
+      Dnodo<E> nuevoNodo = new Dnodo<E>(element);
+      if (this.head != null) {
         // Guardamos en una variable temporal el nodo que ocupaba la primer posición.
-        Dnodo<E> nodoTemporal = this.first();
+        Dnodo<E> nodoTemporal = this.head;
         // Creamos un nodo usando el objeto que nos pasan por parametro, 
         // y lo asignamos como el primero de la lista.
-        this.head = new Dnodo<E>(element);
+        this.head = nuevoNodo;
 
         // Establecemos los enlaces entre los nodos.
         this.head.establecerSiguiente(nodoTemporal);
+        this.head.establecerAnterior(nodoTemporal.anterior());
         nodoTemporal.establecerAnterior(this.head);
-
-        this.size += 1;
+      } else {
+        this.head = nuevoNodo;
+      }
+      this.size += 1;
     }
 
     @Override
     public void addLast(E element) {
         Dnodo<E> nuevoLast = new Dnodo<E>(element);
         try {
-            Dnodo<E> nodoTemporal = this.first();
-            while (nodoTemporal.siguiente() != null) {
-                nodoTemporal.siguiente();
+            Dnodo<E> nodoTemporal = this.head;
+            if (nodoTemporal == null) {
+              this.head = nuevoLast;
+            } else {
+              while (nodoTemporal.siguiente() != null) {
+                  nodoTemporal = nodoTemporal.siguiente();
+              }
+              // establecemos como siguiente del último nodo al nuevo nodo que queremos ingresar.
+              nodoTemporal.establecerSiguiente(nuevoLast);
+              nuevoLast.establecerAnterior(nodoTemporal);
+              // establecemos como previo al primer nodo al último nodo que queremos ingresar.
+              this.head.establecerAnterior(nuevoLast);
             }
-            // establecemos como siguiente del último nodo al nuevo nodo que queremos ingresar.
-            nodoTemporal.establecerSiguiente(nuevoLast);
-            // establecemos como previo al primer nodo al último nodo que queremos ingresar.
-            this.head.establecerAnterior(nodoTemporal);
         } catch (EmptyListException e) {
             this.head = nuevoLast;
         }
-
         this.size += 1;
     }
 
     @Override
     public Dnodo<E> first() throws EmptyListException {
         if (this.head == null) {
-            throw new EmptyListException();
+          throw new EmptyListException();
         }
         return this.head;
     }
@@ -155,8 +161,13 @@ public class TDALista<E> implements PositionList<E> {
     }
 
     @Override
-    public IterableDeListaDE positions() {
-      return new IterableDeListaDE<>(this);
+    public Iterable<Position<E>> positions() {
+      Lista<Position<E>> nuevaLista = new Lista<Position<E>>();
+      for (E elemento: this) {
+        Position<E> position = new Dnodo<E>(elemento);  
+        nuevaLista.addLast(position);
+      }
+      return nuevaLista;
     }
 
     @Override
@@ -264,12 +275,14 @@ public class TDALista<E> implements PositionList<E> {
             this.last().anterior().establecerSiguiente(nodo2);
             this.last().establecerAnterior(nodo2);
         }
+        this.size += 2;
     }
 
     // Ejercicio 3:
-    public boolean ej3Buscar(PositionList<E> lista, E e1) {
-        IteradorDeListaDE<E> miIterador = new IteradorDeListaDE<E>(this);
+    public boolean ej3Buscar(Lista<E> lista, E e1) {
+        IteradorDeListaDE<E> miIterador = new IteradorDeListaDE<E>(lista);
 
+        
         while(miIterador.hasNext()) {
             if (miIterador.next().equals(e1)) {
                 return true;
@@ -280,9 +293,9 @@ public class TDALista<E> implements PositionList<E> {
     }
 
     // Ejercicio 4:
-    public PositionList<E> ej4Repetir(TDALista<E> lista) {
+    public PositionList<E> ej4Repetir(Lista<E> lista) {
         // Generamos una nueva lista y el iterador de la lista que nos pasan por parametro.
-        TDALista<E> nuevaLista = new TDALista<E>(null);
+        Lista<E> nuevaLista = new Lista<E>();
             
         for (E elemento: lista) {
             nuevaLista.addLast(elemento);

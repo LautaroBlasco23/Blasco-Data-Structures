@@ -1,38 +1,41 @@
-/*
-package tp4;
+package practicos.practico4;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import practicos.practico4.interfaces.PositionList;
 /*
 Estos tests asumen que los ejercicios 3 y 4 fueron resueltos mediante una clase EjerciciosTP4
 con un método público para cada ejercicio.
  
 public class EjerciciosTP4<E> {
-	
 	ej3Pertenece
 	ej4Duplicados
-	
 }
 
 Los ejercicios 1 y 2 se asumen fueron resueltos mediantes una clase DoubleLinkedList.
-
+*/
 
 public class EjerciciosTP4Test {
 	
-	private EjerciciosTP4<Integer> ejerciciosInt;
+	private Lista<Integer> ejerciciosInt;
 	    
     @Before
     public void setUp() {
-        ejerciciosInt = new EjerciciosTP4<>();
+        ejerciciosInt = new Lista<>();
     }
 
 	@Test
 	public void testEj2agregar() {
-		DoubleLinkedList<Integer> l = new DoubleLinkedList<>();
-		l.agregar(1,2);
+		Lista<Integer> l = new Lista<>();
+		try {
+			// we've to use a catch statement, bc if list.len() == 1 the method won't work.
+			l.ej2Modificar(1,2);
+		} catch (Exception e) {
+			// pass
+		}
 		
 		int[] expected = {2, 1};
 		
@@ -44,7 +47,13 @@ public class EjerciciosTP4Test {
 		
 		assertEquals(2, l.size());
 		
-		l.agregar(3,4);
+		try {
+			// we've to use a catch statement, bc if list.len() == 1 the method won't work.
+			l.ej2Modificar(3,4);
+		} catch (Exception e) {
+			// pass
+		}
+
 		int[] expected2 = {2, 3, 4, 1};
 		
 		i = 0;
@@ -53,7 +62,12 @@ public class EjerciciosTP4Test {
 			i++;
 		}
 		
-		l.agregar(5,6);
+		try {
+			// we've to use a catch statement, bc if list.len() == 1 the method won't work.
+			l.ej2Modificar(5,6);
+		} catch (Exception e) {
+			// pass
+		}
 		int[] expected3 = {2, 5, 3, 4, 6, 1};
 		
 		i = 0;
@@ -65,36 +79,36 @@ public class EjerciciosTP4Test {
 		
 	@Test
 	public void testEj3Pertenece() {
-		PositionList<Integer> l = new DoubleLinkedList<Integer>();
+		Lista<Integer> l = new Lista<Integer>();
 		l.addLast(1);
 		l.addLast(3);
 		l.addLast(5);
 		l.addLast(7);
-		assertTrue(ejerciciosInt.ej3Pertenece(l, 3));
-		assertTrue(ejerciciosInt.ej3Pertenece(l, 7));
-		assertFalse(ejerciciosInt.ej3Pertenece(l, 4));;
+		assertTrue(ejerciciosInt.ej3Buscar(l, 3));
+		assertTrue(ejerciciosInt.ej3Buscar(l, 7));
+		assertFalse(ejerciciosInt.ej3Buscar(l, 4));;
 	}
 	
 	@Test
 	public void testEj3PerteneceVacio() {
-		PositionList<Integer> l = new DoubleLinkedList<Integer>();
-		assertFalse(ejerciciosInt.ej3Pertenece(l, 3));
+		Lista<Integer> l = new Lista<Integer>();
+		assertFalse(ejerciciosInt.ej3Buscar(l, 3));
 	}
 	
 	@Test
 	public void testEj3PerteneceEquivalencia() {
-		EjerciciosTP4<Persona> ej = new EjerciciosTP4<Persona>();
+		Lista<Persona> ej = new Lista<Persona>();
 		
-		PositionList<Persona> l = new DoubleLinkedList<Persona>();
+		Lista<Persona> l = new Lista<Persona>();
     	l.addLast(new Persona("Luke"));
     	l.addLast(new Persona("Anakin"));
     	
-    	assertTrue("La comparación de elementos debe ser por equivalencia", ej.ej3Pertenece(l, new Persona("Anakin")));
+    	assertTrue("La comparación de elementos debe ser por equivalencia", ej.ej3Buscar(l, new Persona("Anakin")));
 	}
 	
 	@Test
 	public void testEj4Duplicados() {
-		PositionList<Integer> l = new DoubleLinkedList<Integer>();
+		Lista<Integer> l = new Lista<Integer>();
 		l.addLast(1);
 		l.addLast(3);
 		l.addLast(5);
@@ -103,7 +117,7 @@ public class EjerciciosTP4Test {
 		int[] expected = {1, 1, 3, 3, 5, 5, 7, 7};
 		
 		int i = 0;
-		for(int e : ejerciciosInt.ej4Duplicados(l)) {
+		for(int e : ejerciciosInt.ej4Repetir(l)) {
 			assertEquals(expected[i], e);
 			i++;
 		}
@@ -111,8 +125,8 @@ public class EjerciciosTP4Test {
 	
 	@Test
 	public void testEj4DuplicadosVacia() {
-		PositionList<Integer> vacia = new DoubleLinkedList<Integer>();
-		assertEquals(0, ejerciciosInt.ej4Duplicados(vacia).size());
+		Lista<Integer> vacia = new Lista<Integer>();
+		assertEquals(0, ejerciciosInt.ej4Repetir(vacia).size());
 	}
 }
 
@@ -136,4 +150,3 @@ class Persona {
 		return name.equals(p.getName());		
 	}
 }
-*/

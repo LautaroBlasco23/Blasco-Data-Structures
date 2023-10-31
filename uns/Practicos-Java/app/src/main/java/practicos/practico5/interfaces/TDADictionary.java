@@ -2,6 +2,7 @@ package practicos.practico5.interfaces;
 
 import practicos.practico5.exceptions.InvalidEntryException;
 import practicos.practico5.exceptions.InvalidKeyException;
+import practicos.practico5.Entrada;
 
 public interface TDADictionary<K,V>
 {
@@ -23,7 +24,7 @@ public interface TDADictionary<K,V>
 	 * @return Entrada encontrada.
 	 * @throws InvalidKeyException si la clave pasada por par�metro es inv�lida.
 	 */
-	public TDAEntry<K,V> find(K key) throws InvalidKeyException;
+	public Entrada<K,V> find(K key) throws InvalidKeyException;
 	
 	/**
 	 * Retorna una colecci�n iterable que contiene todas las entradas con clave igual a una clave dada.
@@ -31,7 +32,7 @@ public interface TDADictionary<K,V>
 	 * @return Colecci�n iterable de las entradas encontradas.
 	 * @throws InvalidKeyException si la clave pasada por par�metro es inv�lida.
 	 */
-	public Iterable<TDAEntry<K,V>> findAll(K key) throws InvalidKeyException;
+	public Iterable<Entrada<K,V>> findAll(K key) throws InvalidKeyException;
 	
 	/**
 	 * Inserta una entrada con una clave y un valor dado en el diccionario y retorna la entrada creada.
@@ -39,7 +40,7 @@ public interface TDADictionary<K,V>
 	 * @return value Valor de la entrada a crear.
 	 * @throws InvalidKeyException si la clave pasada por par�metro es inv�lida.
 	 */
-	public TDAEntry<K,V> insert(K key, V value) throws InvalidKeyException;
+	public Entrada<K,V> insert(K key, V value) throws InvalidKeyException;
 	
 	/**
 	 * Remueve una entrada dada en el diccionario y devuelve la entrada removida.
@@ -47,12 +48,12 @@ public interface TDADictionary<K,V>
 	 * @return Entrada removida.
 	 * @throws InvalidEntryException si la entrada no est� en el diccionario o es inv�lida.
 	 */
-	public TDAEntry<K,V> remove(TDAEntry<K,V> e) throws InvalidEntryException;
+	public Entrada<K,V> remove(Entrada<K,V> e) throws InvalidEntryException;
 	
 	/**
 	 * Retorna una colecci�n iterable con todas las entradas en el diccionario.
 	 * @return Colecci�n iterable de todas las entradas.
 	 */
-	public Iterable<TDAEntry<K,V>> entries();
+	public Iterable<Entrada<K,V>> entries();
 	
 }

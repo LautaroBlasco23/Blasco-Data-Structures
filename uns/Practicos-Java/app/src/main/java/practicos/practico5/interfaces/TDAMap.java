@@ -1,6 +1,7 @@
 package practicos.practico5.interfaces;
 
 import practicos.practico5.exceptions.InvalidKeyException;
+import practicos.practico5.Entrada;
 
 /**
  * Interface Map
@@ -51,21 +52,20 @@ public interface TDAMap<K,V>
 	 * Retorna una colecci�n iterable con todas las claves del mapeo.
 	 * @return Colecci�n iterable con todas las claves del mapeo.
 	 */
-  /*
+
 	public Iterable<K> keys();
-  */ 
+
 	/**
 	 * Retorna una colecci�n iterable con todas los valores del mapeo.
 	 * @return Colecci�n iterable con todas los valores del mapeo.
 	 */
-  /*
-	public Iterable<V> values();
-  */	
+	
+  public Iterable<V> values();
+
 	/**
 	 * Retorna una colecci�n iterable con todas las entradas del mapeo.
 	 * @return Colecci�n iterable con todas las entradas del mapeo.
 	 */
-  /*
-	public Iterable<Entry<K,V>> entries();
-  */
+
+	public Iterable<Entrada<K,V>> entries();
 }

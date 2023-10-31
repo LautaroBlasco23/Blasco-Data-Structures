@@ -1,6 +1,5 @@
 package practicos.practico2;
 
-import java.util.EmptyStackException;
 import java.util.Stack;
 
 import practicos.practico2.EmptyQueueException.EmptyQueueException;

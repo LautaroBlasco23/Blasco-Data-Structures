@@ -11,11 +11,11 @@ import practicos.practico2.EjerciciosTP2;
 import practicos.practico2.Persona.Persona;
 
 public class Tp2Tests {
-    private EjerciciosTP2 tester;
+    private EjerciciosTP2<Persona> tester;
 
     @Before
     public void setUp() {
-        this.tester = new EjerciciosTP2();
+        this.tester = new EjerciciosTP2<Persona>();
     }
 
     // Test de ejercicio 1.

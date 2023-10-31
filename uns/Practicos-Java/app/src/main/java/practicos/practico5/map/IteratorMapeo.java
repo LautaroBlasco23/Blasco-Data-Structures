@@ -2,8 +2,6 @@ package practicos.practico5.map;
 
 import java.util.Iterator;
 
-import practicos.practico5.Entrada;
-
 public class IteratorMapeo<T> implements Iterator<T> {
   protected T[] lista;
   protected int elementos;

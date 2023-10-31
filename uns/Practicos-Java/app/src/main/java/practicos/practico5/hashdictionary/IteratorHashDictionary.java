@@ -2,22 +2,20 @@ package practicos.practico5.hashdictionary;
 
 import java.util.Iterator;
 
-import com.google.common.collect.Multiset.Entry;
-
-import practicos.practico4.TDALista;
+import practicos.practico4.Lista;
 
 public class IteratorHashDictionary<T> implements Iterator<T> {
-  protected TDALista lista; 
-  protected int elementos;
+  protected Lista<T> lista; 
+  protected int cantElementos;
 
-  public IteratorHashDictionary(TDALista<T> lista) {
+  public IteratorHashDictionary(Lista<T> lista) {
     this.lista = lista;
-    this.elementos = lista.size() - 1;
+    this.cantElementos = lista.size() - 1;
   }
 
   @Override
   public boolean hasNext() {
-    return this.elementos > 0;
+    return this.cantElementos > 0;
   }
 
   @Override
@@ -25,9 +23,8 @@ public class IteratorHashDictionary<T> implements Iterator<T> {
     T result = null;
     if (this.hasNext()) {
       result = (T) this.lista.popHeadElement();
+      this.cantElementos -= 1;
     }
     return result;
   }
 }
-
-
