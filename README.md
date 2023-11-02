@@ -8,7 +8,6 @@ the objective of becomming a better developer.
 
 In this repo I will save all the code i developed on my road through learning data structures.
 
-
 # folders and their meanings
 
 * uns -> Code written for the Data Structures's university subject of the UNS.
@@ -16,5 +15,5 @@ In this repo I will save all the code i developed on my road through learning da
 * books -> Code written based on the books i've read.
 
 Inside of every folder it's a README file, with details about different
-aspects of the implementations, interfaces, tests, books/courses practical 
+aspects of the implementations, interfaces, tests and books/courses practical 
 exercices.
