@@ -1,7 +1,17 @@
-practico3 -> Pilas y colas // Stack & Queues
+# Estructuras de Datos Universidad Nacional del Sur
 
-practico4 -> Lista enlazada (y doblemente enlazada) // Linked List
+This folder contains all the theory, the practical exercices and the code provided by the professors and assistans of the university.
 
-practico5 -> Mapeo, diccionario, set.
+The Rust folder contains my own implementations and my own tests. 
 
-En la carpeta "practicos" voy a dejar las imagenes correspondientes a las diapositivas y practicos de esta materia.
+The Java folder contains university's tests and exercices.
+
+# Data Structures developed in this course
+
+In the order they were teached:
+
+* Stack, Queue
+* Linked List, Double Linked List
+* Map, Dictionary, Set
+* Tree
+* Binary Tree, Binary Search Tree

@@ -1,9 +1,9 @@
-*.exe
-*.pdb
-
-# Practicos de la UNS:
-uns/Practico-java/App/.gradle
-uns/Practico-java/App/build
-uns/Practico-Rust/practico3/target
-
-uns/Practicos-java/.vscode
+# -- UNS -- 
+# Rust
+uns/rust/target
+uns/rust/cargo.lock
+#Java
+uns/java/app/bin
+uns/java/app/.project
+uns/java/app/build
+uns/java/.gradle

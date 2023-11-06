@@ -4,10 +4,6 @@ This repo is the representation of the effort I put on doing
 data structures courses and reading data structures books. With
 the objective of becomming a better developer.
 
-# Data Structures
-
-In this repo I will save all the code i developed on my road through learning data structures.
-
 # folders and their meanings
 
 * uns -> Code written for the Data Structures's university subject of the UNS.
