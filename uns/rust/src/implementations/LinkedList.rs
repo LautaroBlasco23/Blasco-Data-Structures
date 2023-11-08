@@ -1,5 +1,7 @@
+use super::LinkedListIterator::LinkedListIterator;
 // Node struct and interface
 use super::LinkedListNode::LinkedListNode;
+use crate::interfaces::LinkedListIteratorInterface::LinkedListIteratorInterface;
 use crate::interfaces::LinkedListNodeInterface::LinkedListNodeInterface; 
 // Linked List interface
 use crate::interfaces::LinkedListInterface::LinkedListInterface;
@@ -40,7 +42,7 @@ impl<E: PartialEq> LinkedListInterface<E> for LinkedList<E> {
         let new_tail = Box::into_raw(Box::new(LinkedListNode::new(element)));
         
         unsafe {
-            match self.head.take() {
+            match self.head {
                 None => {
                     self.head = Some(new_tail);
                 }
@@ -182,5 +184,13 @@ impl<E: PartialEq> LinkedListInterface<E> for LinkedList<E> {
 
     fn get_vec_of_elements(&self) -> Vec<Option<*mut LinkedListNode<E>>> {
         vec![]
+    }
+
+    // This makes all our lists Iterables<E> (java interface)
+    fn iterator(&self) -> LinkedListIterator<E> {
+        match self.head {
+            Some(head_ptr) => LinkedListIterator::new(Some(head_ptr as *const LinkedListNode<E>)),
+            None => LinkedListIterator::new(None)
+        }
     }
 }

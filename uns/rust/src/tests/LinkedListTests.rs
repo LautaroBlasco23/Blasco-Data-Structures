@@ -1,6 +1,10 @@
+#[allow(unused_imports)]
 use crate::implementations::LinkedListNode::LinkedListNode;
+#[allow(unused_imports)]
 use crate::implementations::LinkedList::LinkedList;
+#[allow(unused_imports)]
 use crate::interfaces::LinkedListInterface::LinkedListInterface;
+#[allow(unused_imports)]
 use crate::interfaces::LinkedListNodeInterface::LinkedListNodeInterface;
 
 #[test]
@@ -14,6 +18,21 @@ fn push_front() {
     new_linked_list.push_front(4);
 
     assert_eq!(new_linked_list.get_size(), 4);
+}
+
+#[test]
+fn push_back() {
+    let mut new_linked_list: LinkedList<isize> = LinkedList::new();
+    assert_eq!(new_linked_list.get_size(), 0);
+
+    for i in 0..10 {
+        new_linked_list.push_back(i);
+    }
+    
+    for i in 0..10 {
+        assert_eq!(new_linked_list.pop_front(), Some(&i));
+    }
+
 }
 
 #[test]

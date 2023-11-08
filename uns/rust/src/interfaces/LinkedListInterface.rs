@@ -1,4 +1,4 @@
-use crate::implementations::LinkedListNode::LinkedListNode;
+use crate::implementations::{LinkedListNode::LinkedListNode, LinkedListIterator::LinkedListIterator};
 
 pub trait LinkedListInterface<E> {
     // Constructor
@@ -16,4 +16,6 @@ pub trait LinkedListInterface<E> {
     fn pop_front(&mut self) -> Option<&E>;
     fn pop_back(&mut self) -> Option<&E>;
     fn pop_element(&mut self, element: E) -> Option<&E>;
+    // Iterator
+    fn iterator(&self) -> LinkedListIterator<E>;
 }
