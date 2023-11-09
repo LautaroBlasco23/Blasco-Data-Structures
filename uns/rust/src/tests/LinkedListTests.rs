@@ -83,7 +83,7 @@ fn pop_front() {
     }
 
     // Popping all the elements in the inversed order they were inserted. 
-    for i in 100..=1 {
+    for i in (1..=100).rev() {
         assert_eq!(new_linked_list.pop_front(), Some(&i));
     }
 }

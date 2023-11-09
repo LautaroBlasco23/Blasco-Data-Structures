@@ -6,9 +6,6 @@ import practicos.practico6.Tree;
 
 public class App {
   public static void main(String[] args) {
-    TNode<Integer> myNode = new TNode<Integer>(1);
-	  Tree<Integer> myTree = new Tree<Integer>(myNode);
 
-    
   }
 }
