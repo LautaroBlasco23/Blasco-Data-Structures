@@ -11,7 +11,7 @@ impl<E: PartialEq> TreeNodeInterface<E> for TreeNode<E> {
     // Constructor
     fn new(value: E) -> Self {
         TreeNode {
-            value: value,
+            value,
             children: LinkedList::new(),
         }
     }
@@ -25,26 +25,24 @@ impl<E: PartialEq> TreeNodeInterface<E> for TreeNode<E> {
         &self.children
     }
 
+    fn pop_child_front(&mut self) -> Option<&TreeNode<E>> {
+        self.children.pop_front()
+    }
+
+    fn pop_child_back(&mut self) -> Option<&TreeNode<E>> {
+        self.children.pop_back()
+    }
+
     // Setters
     fn set_value(&mut self, new_element: E) {
         self.value = new_element;
     }
 
-    fn push_child_front(&mut self, element: E) {
-        let new_tree_node = TreeNode::new(element);
-        self.children.push_front(new_tree_node);
+    fn push_child_front(&mut self, new_child: TreeNode<E>) {
+        self.children.push_front(new_child);
     }
 
-    fn push_child_back(&mut self, element: E) {
-        let new_tree_node = TreeNode::new(element);
-        self.children.push_back(new_tree_node);
-    }
-
-    fn pop_child_front(&mut self) {
-        self.children.pop_front();
-    }
-
-    fn pop_child_back(&mut self) {
-        self.children.pop_back();
+    fn push_child_back(&mut self, new_child: TreeNode<E>) {
+        self.children.push_back(new_child);
     }
 }

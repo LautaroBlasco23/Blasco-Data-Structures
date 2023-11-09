@@ -9,8 +9,8 @@ pub trait TreeNodeInterface<E: PartialEq> {
     fn get_children(&self) -> &LinkedList<TreeNode<E>>;
     // Setters
     fn set_value(&mut self, new_element: E);
-    fn push_child_front(&mut self, element: E);
-    fn push_child_back(&mut self, element: E);
-    fn pop_child_front(&mut self);
-    fn pop_child_back(&mut self);
+    fn push_child_front(&mut self, new_child: TreeNode<E>);
+    fn push_child_back(&mut self, new_child: TreeNode<E>);
+    fn pop_child_front(&mut self) -> Option<&TreeNode<E>>;
+    fn pop_child_back(&mut self) -> Option<&TreeNode<E>>;
 }
