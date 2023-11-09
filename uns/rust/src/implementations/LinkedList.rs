@@ -6,7 +6,8 @@ use crate::interfaces::LinkedListNodeInterface::LinkedListNodeInterface;
 // Linked List interface
 use crate::interfaces::LinkedListInterface::LinkedListInterface;
 
-pub struct LinkedList<E> {
+#[derive(PartialEq)]
+pub struct LinkedList<E: PartialEq> {
     head: Option<*mut LinkedListNode<E>>,
     size: usize,
 }
