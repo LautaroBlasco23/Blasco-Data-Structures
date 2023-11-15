@@ -17,3 +17,5 @@ pub mod MapInterface;
 pub mod TreeNodeInterface;
 #[allow(non_snake_case)]
 pub mod TreeInterface;
+#[allow(non_snake_case)]
+pub mod BinaryTreeInterface;

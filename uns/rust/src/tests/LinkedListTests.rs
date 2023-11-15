@@ -100,3 +100,18 @@ fn pop_element() {
     assert_eq!(new_linked_list.pop_element(2), None);
 }
 
+#[test]
+fn get_vec_of_elements() {
+    let mut new_linked_list: LinkedList<isize> = LinkedList::new();
+    // size in a new list must be 0.
+    assert_eq!(new_linked_list.get_vec_of_elements(), vec![]);
+
+    // pushing 100 elements
+    let mut test_vec = vec![];
+    for i in 1..=10 {
+        new_linked_list.push_back(i);
+        test_vec.push(i);
+    }
+
+    assert_eq!(new_linked_list.get_vec_of_elements(), test_vec);
+}

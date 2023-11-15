@@ -1,27 +1,25 @@
 use crate::implementations::TreeNode::TreeNode;
 use crate::implementations::LinkedList::LinkedList;
 
-pub trait TreeInterface<E: PartialEq> {
+pub trait TreeInterface<T: PartialEq + Copy> {
     // Constructor
     fn new() -> Self;
+    fn new_with_root(root_node: *mut TreeNode<T>) -> Self;
     // booleans
     fn is_empty(&self) -> bool;
-    fn is_internal(&self, node: TreeNode<E>);
-    fn is_external(&self, node: TreeNode<E>);
-    fn is_root(&self, node: TreeNode<E>);
+    fn is_internal(&self, node: *mut TreeNode<T>) -> bool;
+    fn is_external(&self, node: *mut TreeNode<T>) -> bool;
+    fn is_root(&self, node: *mut TreeNode<T>) -> bool;
     // getters
-    fn get_root(&self) -> TreeNode<E>;
-    fn get_all_nodes(&self) -> LinkedList<TreeNode<E>>;
-    fn insert_node(&self, node: TreeNode<E>);
-    fn positions(&self) -> LinkedList<TreeNode<E>>;
-    fn replace(&self, position: TreeNode<E>, new_node: TreeNode<E>);
+    fn get_root(&self) -> Option<*mut TreeNode<T>>;
+    fn get_all_elements(&self) -> LinkedList<&T>;
+    fn insert_node(&mut self, node: &mut TreeNode<T>);
+    fn positions(&self) -> LinkedList<TreeNode<T>>;
+    fn replace(&self, position: TreeNode<T>, new_node: TreeNode<T>);
     // setters
-    fn set_root(&mut self, root_value: E);
-    fn add_first_child(position: TreeNode<E>, value: E);
-    fn add_last_child(position: TreeNode<E>, value: E);
-    fn add_before(position: TreeNode<E>, value: E);
-    fn add_after(position: TreeNode<E>, value: E);
-    fn remove_external(position: TreeNode<E>) -> Option<E>;
-    fn remove_internal(position: TreeNode<E>) -> Option<E>;
-    fn remove_node(position: TreeNode<E>) -> Option<E>;
+    fn set_root(&mut self, root_value: T);
+    fn add_first_child(&mut self, position: TreeNode<T>, value: T);
+    fn add_last_child(&mut self, position: TreeNode<T>, value: T);
+    fn add_before(&mut self, position: TreeNode<T>, value: T);
+    fn add_after(&mut self, position: TreeNode<T>, value: T);
 }

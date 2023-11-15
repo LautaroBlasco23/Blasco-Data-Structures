@@ -30,7 +30,7 @@ fn iterator_with_10_elements() {
     // The 10 elements in the iterator will be showed up
     for i in 1..=10 {
         assert_eq!(iterator.has_next(), true);
-        assert_eq!(iterator.next(), Some(&i));
+        assert_eq!(iterator.next(), Some(i));
     }
 
     // There's no more elements in the iterator

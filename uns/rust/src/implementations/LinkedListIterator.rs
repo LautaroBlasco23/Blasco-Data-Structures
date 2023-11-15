@@ -2,12 +2,29 @@ use crate::interfaces::{LinkedListIteratorInterface::LinkedListIteratorInterface
 
 use super::LinkedListNode::LinkedListNode;
 
-pub struct LinkedListIterator<E> {
-    current_node: Option<*const LinkedListNode<E>>,
+pub struct LinkedListIterator<T> {
+    current_node: Option<*mut LinkedListNode<T>>,
 }
 
-impl<E> LinkedListIteratorInterface<E> for LinkedListIterator<E> {
-    fn new(head: Option<*const LinkedListNode<E>>) -> Self {
+impl<T: Copy> Iterator for LinkedListIterator<T> {
+    type Item = T;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        unsafe {
+            if self.current_node.is_some() {
+                let result = Some(*(*self.current_node.unwrap()).get_value());
+                self.current_node = (*self.current_node.unwrap()).get_next();
+                return result;
+            } else {
+                return None
+            }
+        }
+    }
+
+}
+
+impl<T: Copy> LinkedListIteratorInterface<T> for LinkedListIterator<T> {
+    fn new(head: Option<*mut LinkedListNode<T>>) -> Self {
         LinkedListIterator { 
             current_node: head,
         }
@@ -19,20 +36,4 @@ impl<E> LinkedListIteratorInterface<E> for LinkedListIterator<E> {
             None => false,
         }
     }
-
-    fn next(&mut self) -> Option<&E> {
-        let mut current_element = None;
-        unsafe {
-            if self.current_node.is_some() {
-                current_element = Some((*self.current_node.unwrap()).get_value());
-
-                self.current_node = match (*self.current_node.unwrap()).get_next() {
-                    Some(next_ptr) => Some(next_ptr as *const LinkedListNode<E>),
-                    None => None
-                }
-            }
-        }
-        return current_element;
-    }
-
 }

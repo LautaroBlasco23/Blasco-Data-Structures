@@ -6,13 +6,13 @@ use crate::interfaces::LinkedListNodeInterface::LinkedListNodeInterface;
 // Linked List interface
 use crate::interfaces::LinkedListInterface::LinkedListInterface;
 
-#[derive(PartialEq)]
-pub struct LinkedList<E: PartialEq> {
-    head: Option<*mut LinkedListNode<E>>,
+#[derive(PartialEq, Copy, Clone, Debug)]
+pub struct LinkedList<T: PartialEq + Copy> {
+    head: Option<*mut LinkedListNode<T>>,
     size: usize,
 }
 
-impl<E: PartialEq> LinkedListInterface<E> for LinkedList<E> {
+impl<T: PartialEq + Copy> LinkedListInterface<T> for LinkedList<T> {
     // Constructor
     fn new() -> Self {
         LinkedList {
@@ -22,7 +22,7 @@ impl<E: PartialEq> LinkedListInterface<E> for LinkedList<E> {
     }
 
     // Push methods 
-    fn push_front(&mut self, element: E) {
+    fn push_front(&mut self, element: T) {
         let new_head = Box::into_raw(Box::new(LinkedListNode::new(element)));
         
         unsafe {
@@ -39,7 +39,7 @@ impl<E: PartialEq> LinkedListInterface<E> for LinkedList<E> {
         self.size += 1;
     }
 
-    fn push_back(&mut self, element: E) {
+    fn push_back(&mut self, element: T) {
         let new_tail = Box::into_raw(Box::new(LinkedListNode::new(element)));
         
         unsafe {
@@ -59,7 +59,7 @@ impl<E: PartialEq> LinkedListInterface<E> for LinkedList<E> {
         self.size += 1;
     }
 
-    fn push_after(&mut self, element: E, position: *mut LinkedListNode<E>) {
+    fn push_after(&mut self, element: T, position: *mut LinkedListNode<T>) {
         let new_node = Box::into_raw(Box::new(LinkedListNode::new(element)));
         let mut current_node_ptr = self.head;
 
@@ -79,7 +79,7 @@ impl<E: PartialEq> LinkedListInterface<E> for LinkedList<E> {
         }
     }
 
-    fn push_before(&mut self, element: E, position: *mut LinkedListNode<E>) {
+    fn push_before(&mut self, element: T, position: *mut LinkedListNode<T>) {
         let new_node = Box::into_raw(Box::new(LinkedListNode::new(element)));
         let mut current_node_ptr = self.head;
 
@@ -116,12 +116,12 @@ impl<E: PartialEq> LinkedListInterface<E> for LinkedList<E> {
         self.size
     }
 
-    fn get_head(&self) -> Option<*mut LinkedListNode<E>> {
+    fn get_head(&self) -> Option<*mut LinkedListNode<T>> {
         self.head
     }
 
     // Pop methods
-    fn pop_back(&mut self) -> Option<&E> {
+    fn pop_back(&mut self) -> Option<&T> {
         let mut previous_node_ptr = None;
         let mut current_node_ptr = self.head;
         unsafe {
@@ -146,10 +146,11 @@ impl<E: PartialEq> LinkedListInterface<E> for LinkedList<E> {
         None
     }
 
-    fn pop_front(&mut self) -> Option<&E> {
+    fn pop_front(&mut self) -> Option<&T> {
         unsafe {
             match self.head.take() {
                 Some(old_head) => {
+                    self.size -= 1;
                     self.head = (*old_head).get_next();
                     return Some((*old_head).get_value());
                 }
@@ -160,8 +161,8 @@ impl<E: PartialEq> LinkedListInterface<E> for LinkedList<E> {
         }
     }
 
-    fn pop_element(&mut self, element: E) -> Option<&E> {
-        let mut previous_node_ptr: Option<*mut LinkedListNode<E>> = None;
+    fn pop_element(&mut self, element: T) -> Option<&T> {
+        let mut previous_node_ptr: Option<*mut LinkedListNode<T>> = None;
         let mut current_node_ptr = self.head;
         unsafe {
             while let Some(node) = current_node_ptr {
@@ -183,14 +184,21 @@ impl<E: PartialEq> LinkedListInterface<E> for LinkedList<E> {
         None
     }
 
-    fn get_vec_of_elements(&self) -> Vec<Option<*mut LinkedListNode<E>>> {
-        vec![]
+    fn get_vec_of_elements(&self) -> Vec<T> {
+        let iterator = LinkedListIterator::new(self.head);
+        let mut result_vec = vec![];
+
+        for element in iterator {
+            result_vec.push(element);
+        }
+        
+        result_vec
     }
 
-    // This makes all our lists Iterables<E> (java interface)
-    fn iterator(&self) -> LinkedListIterator<E> {
+    // This makes all our lists Iterables<T> (java interface)
+    fn iterator(&self) -> LinkedListIterator<T> {
         match self.head {
-            Some(head_ptr) => LinkedListIterator::new(Some(head_ptr as *const LinkedListNode<E>)),
+            Some(head_ptr) => LinkedListIterator::new(Some(head_ptr as *mut LinkedListNode<T>)),
             None => LinkedListIterator::new(None)
         }
     }
