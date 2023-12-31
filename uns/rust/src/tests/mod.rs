@@ -11,3 +11,7 @@ pub mod LinkedListIteratorTests;
 pub mod TreeNodeTests;
 #[allow(non_snake_case)]
 pub mod TreeTests;
+#[allow(non_snake_case)]
+pub mod BinaryTreeNodeTests;
+#[allow(non_snake_case)]
+pub mod BinaryTreeTests;

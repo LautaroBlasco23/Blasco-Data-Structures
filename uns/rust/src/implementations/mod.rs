@@ -22,3 +22,5 @@ pub mod Tree;
 pub mod BinaryTree;
 #[allow(non_snake_case)]
 pub mod BinarySearchTree;
+#[allow(non_snake_case)]
+pub mod BinaryTreeNode;
